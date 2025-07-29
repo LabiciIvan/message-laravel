@@ -16,21 +16,15 @@ class FriendRequestController extends Controller
     {
         $user = Auth::user();
 
-        $friendRequests = FriendRequest::where('requestor_id', $user->id)->get();
-        //view.sent.friend.requests
-        return view('friendRequests.index', ['friendRequests' => $friendRequests]);
+        return view('friendRequests.index', ['friendRequests' => $user->friendRequests]);
     }
 
 
     public function received(): View
     {
-        $friendRequests = [];
-
         $user = Auth::user();
 
-        $friendRequests = FriendRequest::where('receiver_id', $user->id)->get();
-
-        return view('friendRequests.received', ['receivedFriendRequests' => $friendRequests]);
+        return view('friendRequests.received', ['receivedFriendRequests' => $user->receivedFriendRequests]);
     }
 
     public function create(Request $request): RedirectResponse

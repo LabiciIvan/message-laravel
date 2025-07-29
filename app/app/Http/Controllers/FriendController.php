@@ -23,12 +23,7 @@ class FriendController extends Controller
     {
         $user = Auth::user();
 
-        // $friends = $user->friends;
-         $friends = $user->allFriends(); // not ->friends anymore
-
-        // $friends = Friend::where('user_id', $user->id)->where('friend_id', $user->id)->get();
-
-        return view('friends.index', ['friends' => $friends]);
+        return view('friends.index', ['friends' => $user->friends]);
     }
 
 
@@ -49,6 +44,11 @@ class FriendController extends Controller
         Friend::create([
             'user_id' => $user->id,
             'friend_id' => $friendRequest->requestor->id
+        ]);
+
+        Friend::create([
+            'user_id' => $friendRequest->requestor->id,
+            'friend_id' => $user->id,
         ]);
 
         return redirect()->route('friends.index');
@@ -103,7 +103,7 @@ class FriendController extends Controller
 
         Log::info('Process delete for user: {id} ', ['id' => $id]);
 
-        $deleted = Friend::where(function ($query) use ($user, $id) {
+        Friend::where(function ($query) use ($user, $id) {
             $query->where('user_id', $user->id)->where('friend_id', $id);
         })->orWhere(function ($query) use ($user, $id) {
             $query->where('friend_id', $user->id)->where('user_id', $id);
