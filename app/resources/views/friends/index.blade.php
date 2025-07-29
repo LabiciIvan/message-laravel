@@ -11,10 +11,10 @@
     </form>
     <h4>Your friends list:</h4>
     @if($friends)
-        @foreach ($friends as $friend)
+        @foreach ($friends as $person)
         <div>
-            <h3>{{ $friend->name }}, {{ $friend->email }}</h3>
-            <form method="POST" action="{{ route('friends.delete', ['id' => $friend->id]) }}">
+            <h3>{{ $person->friend->name }}, {{ $person->friend->email }}</h3>
+            <form method="POST" action="{{ route('friends.delete', ['id' => $person->friend->id]) }}">
                 @csrf
                 @method('DELETE')
                 <button type="submit">Unfriend</button>

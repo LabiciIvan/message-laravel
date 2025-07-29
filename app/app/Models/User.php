@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Friend;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -48,27 +49,19 @@ class User extends Authenticatable
         ];
     }
 
-    public function friends(): BelongsToMany
+    public function friends(): HasMany
     {
-        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id');
+        return $this->hasMany(Friend::class, 'user_id', 'id');
     }
 
-    public function allFriends()
+    public function friendRequests(): HasMany
     {
-        return User::whereIn('id', function ($query) {
-            $query->select('friend_id')
-                ->from('friends')
-                ->where('user_id', $this->id);
-        })->orWhereIn('id', function ($query) {
-            $query->select('user_id')
-                ->from('friends')
-                ->where('friend_id', $this->id);
-        })->get();
+        return $this->hasMany(FriendRequest::class, 'requestor_id', 'id');
     }
 
-
-    public function friendRequests(): BelongsToMany
+    public function receivedFriendRequests(): HasMany
     {
-        return $this->belongsToMany('friend_requests', 'requestor_id', 'receiver_id');
+        return $this->hasMany(FriendRequest::class, 'receiver_id', 'id');
     }
+
 }
