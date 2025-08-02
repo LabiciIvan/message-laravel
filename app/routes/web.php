@@ -2,13 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\FriendRequestController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserExists;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('root');
 })->name('view.home');
+
 
 Route::middleware('auth.redirect')->prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('view.login');
@@ -39,6 +42,11 @@ Route::middleware('auth.isAuthenticated')->prefix('friends')->group(function () 
 });
 
 
-// Route::middleware('auth.isAuthenticated')->prefix('friends/requests')->group(function () {
-//     Route::get('/', [FriendRequestController::class, 'index'])->name('view.sent.friend.requests');
-// });
+Route::middleware('auth.isAuthenticated')->prefix('users')->group(function () {
+    Route::get('/show/{id}', [UserController::class, 'show'])->name('view.user.show');
+});
+
+
+Route::middleware('auth.isAuthenticated')->prefix('conversations')->group(function () {
+    Route::get('/show/{user_id}', [ConversationController::class, 'show'])->name('view.conversations.show');
+});

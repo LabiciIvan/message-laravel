@@ -64,4 +64,10 @@ class User extends Authenticatable
         return $this->hasMany(FriendRequest::class, 'receiver_id', 'id');
     }
 
+
+    public function conversations(): BelongsToMany
+    {
+        return $this->belongsToMany(Conversation::class);
+    }
+
 }

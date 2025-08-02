@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>@yield('title')</title>
 </head>
 <body>
-    <x-navigation-bar/>
-    <div class="container">
-        @yield('content')
-    </div>
+    <x-navigation-bar />
+    @yield('content')
 </body>
 </html> --}}
 
 @extends('main')
 
 @section('main')
-    @yield('content')
+    <div class="p-4">
+        @yield('userContent')
+    </div>
 @endsection
-

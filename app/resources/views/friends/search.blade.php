@@ -1,9 +1,9 @@
 @extends('layouts.friends')
 
-@section('title', 'Search Friends')
+@section('name', 'Search Friends')
 
 
-@section('content')
+@section('friendsContent')
     <a href="{{route('friends.index')}}">X</a>
     <div>
         @if($searchResults->isNotEmpty())
