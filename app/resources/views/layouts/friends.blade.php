@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,4 +9,12 @@
     <x-navigation-bar />
     @yield('content')
 </body>
-</html>
+</html> --}}
+
+@extends('main')
+
+@section('main')
+    <div class="p-4">
+        @yield('friendsContent')
+    </div>
+@endsection

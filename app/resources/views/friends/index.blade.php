@@ -1,8 +1,8 @@
 @extends('layouts.friends')
 
-@section('title', 'Friends list')
+@section('name', 'Friends list')
 
-@section('content')
+@section('friendsContent')
     <form method="POST" action="{{ route('friends.search') }}">
         @csrf
         <input name="searchName" />
@@ -13,11 +13,11 @@
     @if($friends)
         @foreach ($friends as $person)
         <div>
-            <h3>{{ $person->friend->name }}, {{ $person->friend->email }}</h3>
+            <a href="{{ route('view.user.show', ['id' => $person->friend->id]) }}"><h3>{{ $person->friend->name }}, {{ $person->friend->email }}</h3></a>
             <form method="POST" action="{{ route('friends.delete', ['id' => $person->friend->id]) }}">
                 @csrf
                 @method('DELETE')
-                <button type="submit">Unfriend</button>
+                <button class="border p-2 bg-blue-700 curson:pointer" type="submit">Unfriend</button>
             </form>
         </div>
         @endforeach

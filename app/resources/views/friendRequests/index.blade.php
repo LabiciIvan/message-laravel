@@ -1,9 +1,9 @@
 @extends('layouts.friends')
 
-@section('title', 'Your sent friend requests')
+@section('name', 'Your sent friend requests')
 
 
-@section('content')
+@section('friendsContent')
     @if($friendRequests->isNotEmpty())
         @foreach ($friendRequests as $friend)
             {{-- Access the FriendRequest model relationship --}}
@@ -11,7 +11,7 @@
             <form method="POST" action="{{ route('friendRequest.delete', ['id' => $friend->receiver->id]) }}">
                 @csrf
                 @method('DELETE')
-                <button type="submit">Cancell Request</button>
+                <button class="flex bg-blue-200" type="submit">Cancell Request</button>
             </form>
         @endforeach
     @else
